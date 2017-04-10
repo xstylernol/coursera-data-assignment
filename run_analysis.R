@@ -24,7 +24,6 @@ alldata <- rbind(testdata, traindata)
 #Question 2
 #Find features with only functions to calculate a mean or std
 #(so yes to mean(), yes to meanFreq(), but no to angle(Z,gravityMean)
-grep("(mean|std)(.*)\\(\\)", features$V2, ignore.case = TRUE, value = TRUE)
 stdmeancols <- grepl("(mean|std)(.*)\\(\\)", features$V2, ignore.case = TRUE)
 stdmeancols <- c(TRUE, TRUE, stdmeancols )
 #Extract the data of only the mean and std
@@ -53,8 +52,3 @@ meltdata$subjectid <- as.factor(meltdata$subjectid)
 meltdata$variable <- as.character(meltdata$variable)
 meanmeltdata <- summarize(group_by(meltdata, activity, subjectid, variable), meanvalue = mean(value))
 write.table(meanmeltdata, file = "tidydatanarrow.txt", row.names = FALSE)
-
-
-#Now dcast will take the means and treat duplicated features as one feature
-#widedata <- dcast(meltdata, activity + subjectid ~ variable, mean)
-#write.table(widedata, file = "tidydata.txt", row.names = FALSE)
